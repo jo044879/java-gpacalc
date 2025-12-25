@@ -3,7 +3,7 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 
 import camp.nextstep.edu.missionutils.test.NsTest;
 import gpacalc.Application;
-import org.junit.jupiter.api.Test;
+import org.junit.
 
 public class ApplicationTest extends NsTest {
 
