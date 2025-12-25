@@ -41,16 +41,28 @@ public class Application {
         //교양이랑 전공 따로따로 모아놔야함 getter로 가져와서 쓰면 될듯? list에 담아뒀잖아.
         //취득학점 만들기 전에 그냥 싹다 p np 거나 F 면 배제해야함.
         //f np 면 취득학점에서 제외. p np는 평점평균에서 제외
-        double totalScore = 0;
-        totalScore = TotalScore(majorsList, refinementsList);// 전체 취득학점 추출함수
-        TotalAverage(majorsList, refinementsList, totalScore);
+        for(Major major : majorsList){
+            System.out.println("[전공] " + major.getMajorName() + ","
+                    + major.getMajorScore() + ","
+                    + major.getMajorCredit());
+        }
 
+        for (Refinement refine : refinementsList) {
+        // [교양] 과목명,이수학점,평점
+        System.out.println("[교양] " + refine.getRefineScore() + ","
+                + refine.getRefineScore() + ","
+                + refine.getRefinementCredit());
+    }
+
+        TotalScore(majorsList, refinementsList);// 전체 취득학점 추출함수
+        TotalAverage(majorsList, refinementsList);
+        MajorAverage(majorsList);
 
     }
 
 
     // 전체 취득학점 추출함수
-    static double TotalScore(ArrayList<Major> m, ArrayList<Refinement> r){
+    static void TotalScore(ArrayList<Major> m, ArrayList<Refinement> r){
 
         double totalScore = 0;
 
@@ -72,26 +84,51 @@ public class Application {
 
         System.out.println(totalScore+"학점");
 
-        return totalScore;
+
+
     }
 
-    static void TotalAverage(ArrayList<Major> m, ArrayList<Refinement> r, double totalScore){
+    static void TotalAverage(ArrayList<Major> m, ArrayList<Refinement> r) {
+        double totalGradePoints = 0;
 
-        double subjectGradeWeighting = 0;
-        double totalGrade = 0;
+        int gpaTargetCredits = 0;
 
-        for(Major major : m){
-            subjectGradeWeighting = major.MajorCreditToPoint();
-            totalGrade += subjectGradeWeighting * major.majorScore ;
+        for (Major major : m) {
+            String grade = major.getMajorCredit(); // A+, P, F 등
+
+            if (!grade.equals("P") && !grade.equals("NP")) {
+                totalGradePoints += major.getMajorScore() * major.MajorCreditToPoint();
+                gpaTargetCredits += major.getMajorScore();
+            }
         }
 
-        for(Refinement refine : r){
-            subjectGradeWeighting = refine.RefineCreditToPoint();
-            totalGrade += subjectGradeWeighting * refine.refineScore;
+        for (Refinement refine : r) {
+            String grade = refine.getRefinementCredit();
+            if (!grade.equals("P") && !grade.equals("NP")) {
+                totalGradePoints += refine.getRefineScore() * refine.RefineCreditToPoint();
+                gpaTargetCredits += refine.getRefineScore();
+            }
         }
 
-        double totalAverage = totalGrade / totalScore;
-        System.out.println(totalAverage);
+            double totalAverage = totalGradePoints / gpaTargetCredits;
+            System.out.printf("평균 평점: %.2f / 4.5\n", totalAverage);
+
+    }
+    static void MajorAverage(ArrayList<Major> m){
+        double totalGradePoints = 0;
+
+        int gpaTargetCredits = 0;
+
+        for (Major major : m) {
+            String grade = major.getMajorCredit(); // A+, P, F 등
+
+            if (!grade.equals("P") && !grade.equals("NP")) {
+                totalGradePoints += major.getMajorScore() * major.MajorCreditToPoint();
+                gpaTargetCredits += major.getMajorScore();
+            }
+        }
+        double totalAverage = totalGradePoints / gpaTargetCredits;
+        System.out.printf("평균 평점: %.2f / 4.5\n", totalAverage);
     }
 
 

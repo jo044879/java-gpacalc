@@ -3,7 +3,7 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 
 import camp.nextstep.edu.missionutils.test.NsTest;
 import gpacalc.Application;
-import org.junit.
+import org.junit.jupiter.api.Test;
 
 public class ApplicationTest extends NsTest {
 
@@ -14,7 +14,7 @@ public class ApplicationTest extends NsTest {
         assertThat(output()).contains(
                 "<과목 목록>",
                 "[전공] 데이타구조,3,A0",
-                "[전공] 자바프로그래밍언어,3,B+",
+                "[전공] 자바프로그래밍언어,3,B+"
                 "[전공] 컴퓨터구조,3,C0",
                 "[전공] 컴퓨터네트워크,3,D+",
                 "[교양] 미술의이해,3,P",
